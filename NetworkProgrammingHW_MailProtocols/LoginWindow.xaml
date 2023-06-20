@@ -9,7 +9,7 @@
         Title="Log in" Height="450" Width="800">
     <Grid Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
         <Grid.Resources>
-            <Style TargetType="{x:Type Label}">
+            <Style x:Key="fieldLabelStyle" TargetType="{x:Type Label}">
                 <Setter Property="Margin" Value="5"></Setter>
                 <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
                 <Setter Property="FontSize" Value="14"/>
@@ -32,26 +32,34 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Margin="15"
-               HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold">Log in</Label>
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"
+                   Margin="15" HorizontalAlignment="Center"
+                   FontSize="20" FontWeight="DemiBold">Log in</TextBlock>
 
-        <Label Grid.Column="0" Grid.Row="1">Mail type:</Label>
-        <ComboBox Grid.Column="1" Grid.Row="1" SelectedIndex="0" Margin="20,5"
-                  VerticalContentAlignment="Center" FontSize="14">
+        <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource fieldLabelStyle}">Mail type:</Label>
+        <ComboBox Grid.Column="1" Grid.Row="1" Margin="20,5" VerticalContentAlignment="Center"
+                  FontSize="14" SelectedIndex="{Binding MailTypeIndex}">
             <ComboBoxItem>Gmail</ComboBoxItem>
             <ComboBoxItem>Outlook</ComboBoxItem>
             <ComboBoxItem>Ukrnet</ComboBoxItem>
         </ComboBox>
 
-        <Label Grid.Column="0" Grid.Row="2">Login:</Label>
-        <TextBox Grid.Column="1" Grid.Row="2"/>
+        <Label Grid.Column="0" Grid.Row="2" Style="{StaticResource fieldLabelStyle}">Login:</Label>
+        <TextBox Grid.Column="1" Grid.Row="2"
+                 Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Label Grid.Column="0" Grid.Row="3">Password:</Label>
-        <TextBox Grid.Column="1" Grid.Row="3"/>
+        <Label Grid.Column="0" Grid.Row="3" Style="{StaticResource fieldLabelStyle}">Password:</Label>
+        <PasswordBox Grid.Column="1" Grid.Row="3" Margin="20,5" VerticalContentAlignment="Center"
+                     FontSize="14" PasswordChanged="PasswordBox_PasswordChanged"/>
 
-        <Button Grid.Column="1" Grid.Row="4" Margin="20,5" Padding="8"
-                HorizontalAlignment="Right" FontSize="14" FontWeight="DemiBold">Log in</Button>
+        <Label Grid.Column="1" Grid.Row="4" Margin="20,0" Padding="0" HorizontalAlignment="Right"
+               Foreground="Tomato" FontSize="12" Content="{Binding Status}"/>
+
+        <Button Grid.Column="1" Grid.Row="5" Margin="20,5" Padding="8"
+                HorizontalAlignment="Right" FontSize="14" FontWeight="DemiBold"
+                IsEnabled="{Binding IsLoginEnabled}" Command="{Binding LoginCommand}">Log in</Button>
     </Grid>
 </Window>

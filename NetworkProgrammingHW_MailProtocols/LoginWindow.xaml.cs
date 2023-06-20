@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace NetworkProgrammingHW_MailProtocols
 {
@@ -11,6 +12,13 @@ namespace NetworkProgrammingHW_MailProtocols
             InitializeComponent();
 
             DataContext = LoginViewModel;
+            LoginViewModel.RequestClose += (s, e) =>
+                Application.Current.Dispatcher.Invoke(Close);
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            LoginViewModel.Password = (sender as PasswordBox)?.Password ?? string.Empty;
         }
     }
 }
